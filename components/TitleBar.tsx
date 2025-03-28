@@ -1,7 +1,8 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import { colors, fontSizes, spacing } from "../constants/theme";
 
-export const TitleBar = () => {
+export const TitleBar: React.FC = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>MindHaven (alpha)</Text>
@@ -11,15 +12,15 @@ export const TitleBar = () => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 20,
-    paddingVertical: 12,
+    paddingHorizontal: spacing.xl,
+    paddingVertical: spacing.m,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
   },
   title: {
-    fontSize: 16,
-    color: "#000",
+    fontSize: fontSizes.small,
+    color: colors.text,
     opacity: 0.8,
   },
 });

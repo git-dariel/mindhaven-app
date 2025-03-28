@@ -1,6 +1,7 @@
 import { Feather } from "@expo/vector-icons";
 import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { colors, borderRadius, spacing } from "../constants/theme";
 
 interface ActionButtonsProps {
   isListening: boolean;
@@ -19,12 +20,14 @@ export const ActionButtons: React.FC<ActionButtonsProps> = ({
         style={[styles.playButton, isListening ? styles.playButtonActive : {}]}
         onPress={onToggleListening}
       >
-        <Feather name={isListening ? "pause" : "play"} size={24} color="#000" />
+        <Feather name={isListening ? "pause" : "play"} size={24} color={colors.text} />
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-        <Feather name="x" size={24} color="#fff" />
-      </TouchableOpacity>
+      {onClose && (
+        <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+          <Feather name="x" size={24} color={colors.background} />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
@@ -32,22 +35,22 @@ export const ActionButtons: React.FC<ActionButtonsProps> = ({
 const styles = StyleSheet.create({
   actionContainer: {
     position: "absolute",
-    bottom: 40,
+    bottom: spacing.xxl,
     left: 0,
     right: 0,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 20,
+    paddingHorizontal: spacing.xl,
   },
   playButton: {
     width: 48,
     height: 48,
-    borderRadius: 24,
-    backgroundColor: "#E8E8E8",
+    borderRadius: borderRadius.circle,
+    backgroundColor: colors.border,
     justifyContent: "center",
     alignItems: "center",
-    shadowColor: "#000",
+    shadowColor: colors.text,
     shadowOffset: {
       width: 0,
       height: 1,
@@ -57,13 +60,13 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   playButtonActive: {
-    backgroundColor: "#75c9fb",
+    backgroundColor: colors.primaryLight,
   },
   closeButton: {
     width: 48,
     height: 48,
-    borderRadius: 24,
-    backgroundColor: "#FF5A5A",
+    borderRadius: borderRadius.circle,
+    backgroundColor: colors.secondary,
     justifyContent: "center",
     alignItems: "center",
   },
