@@ -1,104 +1,91 @@
 import Constants from "expo-constants";
+import { ResponseType, RequestOptions, ApiError } from "@/types/api.types";
 
-interface RequestOptions {
-  responseType?: "json" | "arraybuffer";
-  headers?: Record<string, string>;
-}
-
-interface ApiError {
-  message: string;
-  status?: number;
-}
-
-export class ApiService {
-  protected baseUrl: string;
-
-  constructor() {
-    const apiUrl = Constants.expoConfig?.extra?.apiUrl;
-    if (!apiUrl) {
-      throw new Error("API URL not configured");
-    }
-    this.baseUrl = apiUrl;
+// Get base URL from environment
+const getBaseUrl = (): string => {
+  const apiUrl = Constants.expoConfig?.extra?.apiUrl;
+  if (!apiUrl) {
+    throw new Error("API URL not configured");
   }
+  return apiUrl;
+};
 
-  protected async handleResponse(response: Response) {
-    if (!response.ok) {
-      const error: ApiError = {
-        message: "Request failed",
-        status: response.status,
-      };
+// Format error to consistent type
+const formatError = (error: unknown): Error => {
+  if (error instanceof Error) return error;
+  if (typeof error === "string") return new Error(error);
+  return new Error("An unknown error occurred");
+};
 
-      try {
-        const data = await response.json();
-        error.message = data.error || error.message;
-      } catch {
-        // If response is not JSON, use status text
-        error.message = response.statusText;
-      }
+// Handle API response
+const handleResponse = async (response: Response): Promise<Response> => {
+  if (!response.ok) {
+    const error: ApiError = {
+      message: "Request failed",
+      status: response.status,
+    };
 
-      throw error;
-    }
-    return response;
-  }
-
-  protected async get(endpoint: string, options: RequestOptions = {}) {
     try {
-      const response = await fetch(`${this.baseUrl}${endpoint}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          ...options.headers,
-        },
-      });
-
-      if (!response.ok) {
-        const error = await response.json();
-        throw error;
-      }
-
-      return options.responseType === "arraybuffer"
-        ? await response.arrayBuffer()
-        : await response.json();
-    } catch (error) {
-      console.error("GET request failed:", error);
-      throw error;
+      const data = await response.json();
+      error.message = data.error || error.message;
+    } catch {
+      error.message = response.statusText;
     }
+
+    throw error;
   }
+  return response;
+};
 
-  protected async post(endpoint: string, data: any, options: RequestOptions = {}) {
-    try {
-      console.log("Making POST request to:", `${this.baseUrl}${endpoint}`, data);
+// Process response based on type
+const processResponse = async (response: Response, responseType?: ResponseType): Promise<any> => {
+  return responseType === "arraybuffer" ? await response.arrayBuffer() : await response.json();
+};
 
-      const response = await fetch(`${this.baseUrl}${endpoint}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          ...options.headers,
-        },
-        body: JSON.stringify(data),
-      });
+// Create request headers
+const createHeaders = (options: RequestOptions = {}): HeadersInit => ({
+  "Content-Type": "application/json",
+  ...options.headers,
+});
 
-      if (!response.ok) {
-        const error = await response.json();
-        throw error;
-      }
+// Make GET request
+const get = async (endpoint: string, options: RequestOptions = {}) => {
+  try {
+    const baseUrl = getBaseUrl();
+    const response = await fetch(`${baseUrl}${endpoint}`, {
+      method: "GET",
+      headers: createHeaders(options),
+    });
 
-      return options.responseType === "arraybuffer"
-        ? await response.arrayBuffer()
-        : await response.json();
-    } catch (error) {
-      console.error("POST request failed:", error);
-      throw error;
-    }
+    await handleResponse(response);
+    return processResponse(response, options.responseType);
+  } catch (error) {
+    console.error("GET request failed:", error);
+    throw formatError(error);
   }
+};
 
-  private formatError(error: any): Error {
-    if (error instanceof Error) {
-      return error;
-    }
-    if (typeof error === "string") {
-      return new Error(error);
-    }
-    return new Error("An unknown error occurred");
+// Make POST request
+const post = async (endpoint: string, data: unknown, options: RequestOptions = {}) => {
+  try {
+    const baseUrl = getBaseUrl();
+    console.log("Making POST request to:", `${baseUrl}${endpoint}`, data);
+
+    const response = await fetch(`${baseUrl}${endpoint}`, {
+      method: "POST",
+      headers: createHeaders(options),
+      body: JSON.stringify(data),
+    });
+
+    await handleResponse(response);
+    return processResponse(response, options.responseType);
+  } catch (error) {
+    console.error("POST request failed:", error);
+    throw formatError(error);
   }
-}
+};
+
+export const apiService = {
+  get,
+  post,
+};

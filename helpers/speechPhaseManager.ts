@@ -1,4 +1,4 @@
-import { AUDIO_CONFIG } from "../../constants/audio";
+import { AUDIO_CONFIG } from "../constants/audio";
 import { SpeechPhase } from "../types/audio";
 
 interface PhaseUpdateParams {

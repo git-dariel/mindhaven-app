@@ -1,4 +1,4 @@
-import { AUDIO_CONFIG } from "../../constants/audio";
+import { AUDIO_CONFIG } from "../constants/audio";
 
 interface SpeechPattern {
   syllableBoundaries: number[];

@@ -6,6 +6,7 @@ export default {
     slug: "mindhaven-app",
     version: "1.0.0",
     orientation: "portrait",
+    scheme: "mindhaven",
     icon: "./assets/icon.png",
     userInterfaceStyle: "light",
     splash: {
@@ -27,7 +28,7 @@ export default {
       favicon: "./assets/favicon.png",
     },
     extra: {
-      apiUrl: process.env.API_URL || "http://192.168.1.12:3000/api",
+      apiUrl: process.env.API_URL || "http://192.168.1.8:3000/api",
       googleCredentialsPath:
         process.env.GOOGLE_APPLICATION_CREDENTIALS || "./mindhaven-tts-e1026fbd1dc1.json",
       googleProjectId: process.env.GOOGLE_CLOUD_PROJECT || "mindhaven-tts",

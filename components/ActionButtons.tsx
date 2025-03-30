@@ -20,7 +20,7 @@ export const ActionButtons: React.FC<ActionButtonsProps> = ({
         style={[styles.playButton, isListening ? styles.playButtonActive : {}]}
         onPress={onToggleListening}
       >
-        <Feather name={isListening ? "pause" : "play"} size={24} color={colors.text} />
+        <Feather name={isListening ? "pause" : "play"} size={32} color={colors.background} />
       </TouchableOpacity>
 
       {onClose && (
@@ -34,33 +34,29 @@ export const ActionButtons: React.FC<ActionButtonsProps> = ({
 
 const styles = StyleSheet.create({
   actionContainer: {
-    position: "absolute",
-    bottom: spacing.xxl,
-    left: 0,
-    right: 0,
-    flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: spacing.xl,
+    justifyContent: "center",
+    width: "100%",
+    paddingVertical: spacing.l,
   },
   playButton: {
-    width: 48,
-    height: 48,
+    width: 64,
+    height: 64,
     borderRadius: borderRadius.circle,
-    backgroundColor: colors.border,
+    backgroundColor: colors.primary,
     justifyContent: "center",
     alignItems: "center",
     shadowColor: colors.text,
     shadowOffset: {
       width: 0,
-      height: 1,
+      height: 2,
     },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 2,
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   playButtonActive: {
-    backgroundColor: colors.primaryLight,
+    backgroundColor: colors.primaryDark,
   },
   closeButton: {
     width: 48,

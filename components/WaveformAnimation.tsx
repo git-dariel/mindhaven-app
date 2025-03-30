@@ -13,8 +13,8 @@ const Dot = ({ index, amplitude }: { index: number; amplitude: number }) => {
   useEffect(() => {
     Animated.spring(animation, {
       toValue: 1 + amplitude * 0.8,
-      tension: 80,
-      friction: 4,
+      tension: 120,
+      friction: 8,
       useNativeDriver: true,
     }).start();
   }, [amplitude]);
@@ -31,32 +31,27 @@ const Dot = ({ index, amplitude }: { index: number; amplitude: number }) => {
     }
   };
 
-  return (
-    <Animated.View
-      style={[
-        styles.dot,
-        {
-          backgroundColor: getColor(),
-          transform: [
-            { scale: animation },
-            {
-              translateY: animation.interpolate({
-                inputRange: [0.8, 1, 1.8],
-                outputRange: [15, 0, -15],
-              }),
-            },
-          ],
-        },
-      ]}
-    />
-  );
+  const animatedStyle = {
+    transform: [
+      { scaleY: animation },
+      {
+        translateY: animation.interpolate({
+          inputRange: [0.8, 1, 1.8],
+          outputRange: [10, 0, -10],
+        }),
+      },
+    ],
+    backgroundColor: getColor(),
+  };
+
+  return <Animated.View style={[styles.dot, animatedStyle]} />;
 };
 
 export const WaveformAnimation: React.FC<Props> = ({ isAnimating, amplitudes = [] }) => {
   return (
     <View style={styles.container}>
       {Array.from({ length: 6 }).map((_, index) => (
-        <Dot key={index} index={index} amplitude={isAnimating ? amplitudes[index] || 0 : 0} />
+        <Dot key={index} index={index} amplitude={isAnimating ? amplitudes[index] || 0 : 0.1} />
       ))}
     </View>
   );
