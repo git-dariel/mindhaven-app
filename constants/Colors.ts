@@ -3,50 +3,50 @@
  * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
  */
 
-const tintColorLight = "#0a7ea4";
-const tintColorDark = "#fff";
+const tintColorLight = "#000000";
+const tintColorDark = "#FFFFFF";
 
 export const Colors = {
-  primary: "#0066FF", // Vibrant blue
-  secondary: "#2D7FFF", // Lighter blue
-  accent: "#F472B6", // Accent color - Pink for warmth
+  primary: "#000000", // Black
+  secondary: "#333333", // Dark gray
+  accent: "#666666", // Medium gray
   background: {
-    dark: "#0A0A0F", // Deep dark
-    darker: "#050507", // Almost black
-    card: "rgba(20, 20, 35, 0.6)", // Semi-transparent dark blue
-    glass: "rgba(255, 255, 255, 0.03)", // Glass effect
+    dark: "#FFFFFF", // White
+    darker: "#F5F5F5", // Light gray
+    card: "rgba(245, 245, 245, 0.6)", // Semi-transparent light gray
+    glass: "rgba(0, 0, 0, 0.03)", // Glass effect
   },
   text: {
-    primary: "#FFFFFF",
-    secondary: "rgba(255, 255, 255, 0.8)",
-    muted: "rgba(255, 255, 255, 0.5)",
+    primary: "#000000", // Black
+    secondary: "rgba(0, 0, 0, 0.8)", // Semi-transparent black
+    muted: "rgba(0, 0, 0, 0.5)", // More transparent black
   },
   gradient: {
-    primary: ["#0066FF", "#0047B3"],
-    dark: ["rgba(10, 10, 15, 0)", "rgba(5, 5, 7, 0.95)"],
-    glass: ["rgba(255, 255, 255, 0.1)", "rgba(255, 255, 255, 0.05)"],
+    primary: ["#000000", "#333333"], // Black to dark gray
+    dark: ["rgba(245, 245, 245, 0)", "rgba(245, 245, 245, 0.95)"], // Transparent to light gray
+    glass: ["rgba(0, 0, 0, 0.05)", "rgba(0, 0, 0, 0.02)"], // Glass effect
   },
   waveform: {
-    active: "#0066FF",
-    inactive: "rgba(0, 102, 255, 0.3)",
+    active: "#000000", // Black
+    inactive: "rgba(0, 0, 0, 0.3)", // Semi-transparent black
   },
   border: {
-    light: "rgba(255, 255, 255, 0.04)",
+    light: "rgba(0, 0, 0, 0.1)", // Very light gray
   },
   light: {
-    text: "#11181C",
-    background: "#fff",
+    text: "#000000", // Black
+    background: "#FFFFFF", // White
     tint: tintColorLight,
-    icon: "#687076",
-    tabIconDefault: "#687076",
+    icon: "#555555", // Gray
+    tabIconDefault: "#999999", // Light gray
     tabIconSelected: tintColorLight,
   },
   dark: {
-    text: "#ECEDEE",
-    background: "#151718",
+    text: "#FFFFFF", // White
+    background: "#000000", // Black
     tint: tintColorDark,
-    icon: "#9BA1A6",
-    tabIconDefault: "#9BA1A6",
+    icon: "#DDDDDD", // Very light gray
+    tabIconDefault: "#AAAAAA", // Light gray
     tabIconSelected: tintColorDark,
   },
 };

@@ -28,7 +28,7 @@ export default {
       favicon: "./assets/favicon.png",
     },
     extra: {
-      apiUrl: process.env.API_URL || "http://192.168.1.8:3000/api",
+      apiUrl: process.env.API_URL || "http://192.168.1.10:3000/api",
       googleCredentialsPath:
         process.env.GOOGLE_APPLICATION_CREDENTIALS || "./mindhaven-tts-e1026fbd1dc1.json",
       googleProjectId: process.env.GOOGLE_CLOUD_PROJECT || "mindhaven-tts",

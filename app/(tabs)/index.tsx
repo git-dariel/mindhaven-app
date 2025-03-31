@@ -1,20 +1,16 @@
-import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
 import { TTSTest } from "@/components/TTSTest";
 import { colors } from "@/constants/theme";
 
 export default function HomeScreen() {
   return (
-    <SafeAreaView style={styles.container} edges={["right", "left"]}>
+    <SafeAreaView
+      className="flex-1"
+      style={{ backgroundColor: colors.background }}
+      edges={["right", "left"]}
+    >
       <TTSTest />
+      {/* <TestComponent /> */}
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.background,
-  },
-});

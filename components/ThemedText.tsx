@@ -1,60 +1,48 @@
-import { Text, type TextProps, StyleSheet } from 'react-native';
+import { Text, type TextProps } from "react-native";
 
-import { useThemeColor } from '@/hooks/useThemeColor';
+import { useThemeColor } from "@/hooks/useThemeColor";
 
 export type ThemedTextProps = TextProps & {
   lightColor?: string;
   darkColor?: string;
-  type?: 'default' | 'title' | 'defaultSemiBold' | 'subtitle' | 'link';
+  type?: "default" | "title" | "defaultSemiBold" | "subtitle" | "link";
+  className?: string;
 };
 
 export function ThemedText({
   style,
   lightColor,
   darkColor,
-  type = 'default',
+  type = "default",
+  className = "",
   ...rest
 }: ThemedTextProps) {
-  const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
+  const color = useThemeColor({ light: lightColor, dark: darkColor }, "text");
+
+  let typeClass = "";
+  switch (type) {
+    case "default":
+      typeClass = "text-base leading-6";
+      break;
+    case "defaultSemiBold":
+      typeClass = "text-base leading-6 font-semibold";
+      break;
+    case "title":
+      typeClass = "text-3xl font-bold leading-8";
+      break;
+    case "subtitle":
+      typeClass = "text-xl font-bold";
+      break;
+    case "link":
+      typeClass = "leading-[30px] text-base";
+      break;
+  }
 
   return (
     <Text
-      style={[
-        { color },
-        type === 'default' ? styles.default : undefined,
-        type === 'title' ? styles.title : undefined,
-        type === 'defaultSemiBold' ? styles.defaultSemiBold : undefined,
-        type === 'subtitle' ? styles.subtitle : undefined,
-        type === 'link' ? styles.link : undefined,
-        style,
-      ]}
+      className={`${typeClass} ${className}`}
+      style={[{ color: type === "link" ? "#333333" : color }, style]}
       {...rest}
     />
   );
 }
-
-const styles = StyleSheet.create({
-  default: {
-    fontSize: 16,
-    lineHeight: 24,
-  },
-  defaultSemiBold: {
-    fontSize: 16,
-    lineHeight: 24,
-    fontWeight: '600',
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    lineHeight: 32,
-  },
-  subtitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  link: {
-    lineHeight: 30,
-    fontSize: 16,
-    color: '#0a7ea4',
-  },
-});

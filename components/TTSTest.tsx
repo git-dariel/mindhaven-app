@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Text, StatusBar } from "react-native";
+import { View, Text } from "react-native";
 import { colors, spacing } from "../constants/theme";
 import { VoiceInterface } from "./VoiceInterface";
 import { useTTS } from "@/hooks/useTTS";
@@ -11,18 +11,22 @@ export const TTSTest = () => {
   const { isAnimating, audioData, handleToggle } = useTTS({ text: config.SAMPLE_TEXT });
 
   return (
-    <LinearGradient colors={[colors.background, colors.backgroundDark]} style={styles.container}>
-      <StatusBar barStyle="light-content" />
-
-      <View style={styles.mainContainer}>
+    <LinearGradient colors={[colors.background, colors.backgroundDark]} className="flex-1">
+      <View style={{ paddingTop: spacing.xl }} className="flex-1">
         <AIHeader isAnimating={isAnimating} />
 
-        <View style={styles.content}>
+        <View
+          style={{ paddingHorizontal: spacing.xl, marginTop: -spacing.xl * 4 }}
+          className="flex-1 items-center justify-center"
+        >
           <VoiceInterface isAnimating={isAnimating} amplitudes={audioData} onPress={handleToggle} />
         </View>
 
-        <View style={styles.hintContainer}>
-          <Text style={styles.hintText}>
+        <View
+          style={{ bottom: spacing.xl * 2, left: spacing.xl, right: spacing.xl }}
+          className="absolute items-center"
+        >
+          <Text style={{ color: colors.textSecondary }} className="text-sm text-center opacity-90">
             {isAnimating
               ? "I'm here to listen and understand..."
               : "Tap the microphone to start our conversation"}
@@ -32,33 +36,3 @@ export const TTSTest = () => {
     </LinearGradient>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  mainContainer: {
-    flex: 1,
-    paddingTop: spacing.xl,
-  },
-  content: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    paddingHorizontal: spacing.xl,
-    marginTop: -spacing.xl * 4, // Pull the voice interface up
-  },
-  hintContainer: {
-    position: "absolute",
-    bottom: spacing.xl * 2,
-    left: spacing.xl,
-    right: spacing.xl,
-    alignItems: "center",
-  },
-  hintText: {
-    fontSize: 14,
-    color: colors.textSecondary,
-    textAlign: "center",
-    opacity: 0.9,
-  },
-});
